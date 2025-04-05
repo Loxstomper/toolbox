@@ -1,0 +1,17 @@
+#compdef tabgroup
+
+# Default config values
+local config_file="$HOME/.config/tabgroup/config"
+local tabgroup_dir="$HOME/.tabgroup"
+
+# Source config file if it exists
+if [[ -f "$config_file" ]]; then
+  source "$config_file"
+fi
+
+# Complete only the first argument (tabgroup name)
+if (( CURRENT == 2 )); then
+  local -a groups
+  groups=(${(f)"$(find "$tabgroup_dir" -maxdepth 1 -type f -printf '%f\n' 2>/dev/null)"})
+  _describe 'tabgroups' groups
+fi
